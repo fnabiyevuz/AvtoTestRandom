@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="page-content-wrapper py-3">
+      <div class="container">
+        <div class="card invoice-card shadow">
+          <div class="card-body">
+            <div class="invoice-info text-end">
+              <div class="contact-form">
+                <form action="#" method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-6">
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <input class="form-control" name="quantity" type="number" value="10" min="1" max="{{count}}">
+                      </div>
+                    </div>
+                    <div class="col-3"><button class="btn btn-primary w-100" {% if open %} disabled {% endif %}>Start</button></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <table class="table mb-0 table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Correct</th>
+                  <th scope="col">Incorrect</th>
+                  <th scope="col">Percentage</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for q in quizs %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{q.quantity}}</td>
+                    <td>{{q.true}}</td>
+                    <td>{{q.false}}</td>
+                    <td>{{q.percentage}}</td>
+                    <td>{{q.date}}</td>
+                    <td>{% if q.is_finished == True %}<a href="/view/?q={{ q.id }}" style="color:red">View</a>{% else %}<a href="/question/" style="color:green">Open</a>{% endif %}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

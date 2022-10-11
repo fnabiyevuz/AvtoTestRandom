@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Content Wrapper -->
+    <div class="page-content-wrapper py-3">
+      <div class="container">
+        <!-- Language Area -->
+        <div class="card">
+          <div class="card-body">
+            <div class="language-area-wrapper">
+              {% for q in ansof %}
+                <ul class="ps-0 language-lists">
+                  <li>
+                    <div class="form-check">
+                      {{ forloop.counter }}. {{ q.question.question }}
+                    </div>
+                  </li>
+                  {% for a in q.question.ans_que.all %}
+                    <li>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answer{{q.id}}" id="{{a.id}}" {% if q.answer == a and a.status %} style="border-color:green; background-color:green;" {% elif q.answer == a %} style="border-color:red; background-color:red;" {% elif a.status %} style="border-color:green; background-color:green;" {% endif %}  disabled>
+                        <label class="form-check-label" for="{{a.id}}">{{ a.answer }}</label>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul><hr>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Content Wrapper -->
+    <div class="page-content-wrapper py-3">
+      <div class="container">
+        <!-- Language Area -->
+        <div class="card">
+          <div class="card-body">
+            <div class="language-area-wrapper">
+              <form action="#" method="POST">
+                {% csrf_token %}
+                <ul class="ps-0 language-lists">
+                  <!-- total : {{quiz.quantity}} correct: {{quiz.true}} incorrect : {{quiz.false}} percentage : {{quiz.percentage}} -->
+                  <div class="row">
+                    <div class="col-3">
+                      Total : {{quiz.quantity}}
+                    </div>
+                    <div class="col-3">
+                      Correct: {{quiz.true}}
+                    </div>
+                    <div class="col-3">
+                      Incorrect : {{quiz.false}}
+                    </div>
+                    <div class="col-3">
+                      Percentage : {{quiz.percentage}}
+                    </div>
+                  </div>
+                  <li>
+                    <div class="form-check">
+                      {{ question.question.question }}
+                    </div>
+                    {% if question.question.image %}
+                    <div class="form-check">
+                      <img src="{{ question.question.image.url }}" alt="picture">
+                    </div>
+                    {% endif %}
+                  </li>
+                  {% for a in answers %}
+                    <li>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answer" value="{{ a.id }}" id="{{a.id}}">
+                        <label class="form-check-label" for="{{a.id}}">{{ a.answer }}</label>
+                      </div>
+                    </li>
+                  {% endfor %}
+                  <input type="hidden" name="question" value="{{ question.id }}">
+                  <input type="submit" value="Next" class="btn m-1 btn-primary">
+                  </ul>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
